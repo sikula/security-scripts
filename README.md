@@ -1,7 +1,7 @@
-pen-test-scripts
+security-scripts
 ================
 
-Scripts that could be used during a penetration test.
+Scripts that could be used to assess the security of a system
 
 ###### Files:
     system-enumeration/resources/command_list.json:
