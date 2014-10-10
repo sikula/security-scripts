@@ -10,7 +10,7 @@ Directory containing proof of concept code using scripts from the security-scrip
 	The script adds a new function 'hide_process()' which changes the process name.
 		NOTE: Commands such as 'ps -A' and 'top' will show the 'fake' process name, but commands such as 'ps auxwww' will display the true process name.
 
-	###### Creating the executable file
+	 *Creating the executable file*
 		1. Clone the repository
 		2. Create the zip file
 			+ zip -r zip_file_name *
