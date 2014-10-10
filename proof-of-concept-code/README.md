@@ -1,6 +1,8 @@
 
-Directory containing proof of concept code using scripts from the security-scripts repository
-##### Directory 'system-enumeration-poc'
+Directory containing proof of concept code using scripts from the security-scripts repository.
+<br/>
+<br/>
+###### Directory 'system-enumeration-poc'
 -------------
 Proof of concept code using the 'system-enumeration.py' script.
 	
