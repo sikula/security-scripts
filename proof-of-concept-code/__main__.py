@@ -7,18 +7,6 @@ import json
 import codecs
 import datetime
 import subprocess
-from optparse import OptionParser
-
-#// Parse the command line options
-parser = OptionParser()
-parser.add_option("-c", "--command-list", dest="command_list" , help="Specifiy a json file with the commands to be enumerated")
-parser.add_option("-e", "--enumerate"   , dest="enumeration"  , help="Specify a enumeration to run defined by a key in the json file")
-parser.add_option("-o", "--output"      , dest="output_file"  , help="Specify output file")
-parser.add_option("-f", "--forest"      , dest="forest"       , action='store_true' , help="Display output in tree-like format")
-parser.add_option("-N", "--no-header"   , dest="no_header"    , action='store_true', help="Remove headers from output")
-(options, arg) = parser.parse_args()
-if options.enumeration:
-    options.enumeration = options.enumeration.upper()
 
 #-----------------------------------------------------------------------------------------------------
 # Handles the opening, reading and parsing of the JSON file which contains all the enumerations,
@@ -52,12 +40,9 @@ class Tee(object):
 #-----------------------------------------------------------------------------------------------------
 class FormatHelper:
     def _big_title(self, msg):
-        if not options.no_header:
-            print "\n"
-            print "[ + ] " + msg
-            print "-" * 77
-        else:
-            print "\n"
+        print "\n"
+        print "[ + ] " + msg
+        print "-" * 77
 
 
     def error(self, text):
@@ -77,8 +62,6 @@ class FormatHelper:
     def _print_cmd(self, output):
         if options.forest:
             print "  |> ", output.rstrip()
-        else:
-            print "    ", output.rstrip()
 
 
 #-----------------------------------------------------------------------------------------------------
@@ -114,11 +97,8 @@ class CommandRunner:
 
     def run_enumerations(self):
         result = []
-        if not options.enumeration:
-            for enumeration in self.json:
-                self.cmd_exec(enumeration)
-        else:
-            self.cmd_exec(options.enumeration)
+        for enumeration in self.json:
+       	    self.cmd_exec(enumeration)
 
 
 
@@ -137,18 +117,7 @@ def main():
     hide_process()
     formatter = FormatHelper()
     commander = CommandRunner()
-    if options.output_file:
-        output_file = open(options.output_file, 'w')
-        original    = sys.stdout
-        sys.stdout  = Tee(sys.stdout, output_file)
-        formatter.file_header()
-        commander.run_enumerations()
-        sys.stdout = original
-        output_file.close()
-    else:
-        commander.run_enumerations()
-
-
+    commander.run_enumerations()
 
 if __name__ == "__main__":
     main()
