@@ -20,7 +20,7 @@ NOTE: Commands such as *ps -A* and *top* will show the **fake** process name, bu
 	1. Clone the repository
 	2. Change directory into 'proof-of-concept-code'
 	3. Create the zip file
-		- zip -r zip_file_name *
+		- zip -r zip_file_name resources __main__.py
 	4. Make the zip file executable
 		- echo "#!/usr/bin/python" | cat - zip_file_name > new_file_name
 		- chmod ug+x new_file_name
