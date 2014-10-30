@@ -2,7 +2,7 @@
 Directory containing proof of concept code using scripts from the security-scripts repository.
 <br/>
 <br/>
-###### Directory 'system-enumeration-poc'
+###### Directory 'proof-of-concept-code'
 -------------
 Proof of concept code using the 'system-enumeration.py' script.
 	
@@ -18,9 +18,10 @@ NOTE: Commands such as *ps -A* and *top* will show the **fake** process name, bu
 **Creating the executable file**
 
 	1. Clone the repository
-	2. Create the zip file
+	2. Change directory into 'proof-of-concept-code'
+	3. Create the zip file
 		- zip -r zip_file_name *
-	3. Make the zip file executable
+	4. Make the zip file executable
 		- echo "#!/usr/bin/python" | cat - zip_file_name > new_file_name
 		- chmod ug+x new_file_name
 
