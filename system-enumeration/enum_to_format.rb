@@ -36,13 +36,17 @@ json = {
             "cmd"   => %q[arp -ven],
             "msg"   => "ARP Information",
         },
-        "Firewall"  => {
-            "cmd"   => %q[firewall-cmd --list-all-zones],
-            "msg"   => "Firewall Information --( Firewall-cmd )--",
+        "Firewall" => {
+            "cmd"  => %q[firewall-cmd --list-all-zones],
+            "msg"  => "Firewall Information --( Firewall CMD ) --",
         },
         "IPTables"  => {
             "cmd"   => %q[iptables -S],
             "msg"   => "Firewall Information --( IP Tables )--",
+        },
+        "TCPDUMP"   => {
+            "cmd"   => %q[tcpdump -s0 -xxXX -vv -i any -c 25 "host $(ifconfig | grep -w inet | grep -v 127.0.0.1 | sed 's/\s\+/ /g' | cut -d" " -f 3)"],
+            "msg"   => "TCP Dump Network Traffic",
         },
     },
     "DRIVE_INFO" => {
@@ -69,7 +73,14 @@ json = {
             "msg"   => "Listing Known Cron Jobs",
         },
         "CRONW"     => {
+            "cmd"   => %q[ls -alR /etc/cron* | awk "\$1 ~ /w.\$/"],
             "msg"   => "Listing Writable Cron Directories",
+        },
+    },
+    "DATABSE_INFO" => {
+        "MySQLDUMP" => {
+            "cmd"   => %q[systemctl stop mysqld.service ; mysqld_safe ; mysql_dump --all-databases ; systemctly start mysqld.service"],
+            "msg"   => "Dumping MySQL Database",
         },
     },
     "CONF_INFO" => {
@@ -168,10 +179,10 @@ json = {
         },
     },
     "PACKAGES" => {
-        "RPM"       => {
-            "cmd"   => %q[rpm -qa --qf "[%-10{=FILEMD5S} %-30{NAME}] %{INSTALLTIME:date}\n" | sort -u -k2],
-            "msg"   => "Listing Installed Packages",
-        }
+        "DPKG"       => {
+            "cmd"   => %q[],
+            "msg"   => "Listing Installed Packages --( DPKG )--",
+        },
     },
     "TOOLS_INFO" => {
         "Tools"     => {
@@ -179,15 +190,11 @@ json = {
             "msg"   => "Available Development Tools",
         },
     },
-    "VIRT_HARDWAre" => {
-	"VirtualBox All" => {
-	    "cmd" => %q[vboxmanage list --long vms],
-	    "msg" => "Listing All Configured Virtual Machines",
-	},
-	"VirtualBox Running" => {
-	    "cmd" => %q[vboxmanage list --long runningvms],
-            "msg" => "Listing all Running Virtual Machines",
-	},
+    "VIRT_HARDWARE"  => {
+        "VBoxManage" => {
+            "cmd"    => %q[vboxmanage list --long vms],
+            "msg"    => "Virtual Machine Information"
+        },
     },
     "HARDWARE" => {
         "LVM"       => {
