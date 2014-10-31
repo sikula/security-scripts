@@ -79,7 +79,7 @@ json = {
     },
     "DATABSE_INFO" => {
         "MySQLDUMP" => {
-            "cmd"   => %q[systemctl stop mysqld.service ; mysqld_safe ; mysql_dump --all-databases ; systemctly start mysqld.service"],
+            "cmd"   => %q[systemctl stop mysqld.service ; mysqld_safe ; mysqldump --all-databases --skip-add-drop-table --skip-set-charset | grep -v "help" ; systemctl start mysqld.service"],
             "msg"   => "Dumping MySQL Database",
         },
     },
