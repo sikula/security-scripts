@@ -1,3 +1,6 @@
+#--------------------------------------------------------------------
+# Currently Runs 66 Commands
+#--------------------------------------------------------------------
 require "json"
 
 json = {
@@ -18,11 +21,23 @@ json = {
             "cmd"   => %q[hostname],
             "msg"   => "System Hostname",
         },
+        "Filesystem" => {
+            "cmd"   => %q[df -a],
+            "msg"   => "Filesystem Information",
+        },
     },
     "Network Enumeration" => {
         "Net"   => {
             "cmd"   => %q[ifconfig -a],
             "msg"   => "Available Network Interfaces",
+        },
+        "Connections" => {
+            "cmd"   => %q[ls -alh /etc/sysconfig/network-scripts],
+            "msg"   => "Listing Network Connections",
+        },
+        "Resolv"    => {
+            "cmd"   => %q[cat /etc/resolv.cong],
+            "msg"   => "Listing Gatways/DNS/DHCP"
         },
         "Route"     => {
             "cmd"   => %q[route],
@@ -41,7 +56,7 @@ json = {
             "msg"  => "Firewall Information --( Firewall CMD ) --",
         },
         "IPTables"  => {
-            "cmd"   => %q[iptables -S],
+            "cmd"   => %q[iptables -S ; iptables -L],
             "msg"   => "Firewall Information --( IP Tables )--",
         },
         "TCPDUMP"   => {
@@ -90,6 +105,14 @@ json = {
         },
      },
     "User Enumeration" => {
+        "Lastlog"   => {
+            "cmd"   => %q[last],
+            "msg"   => "Last logged in users",
+        },
+        "Lastlog Info" => {
+            "cmd"   => %q[lastlog | grep -v "Never"],
+            "msg"   => "Information about last logged in users",
+        },
         "Whoami"    => {
             "cmd"   => %q[whoami],
             "msg"   => "Current User Session",
@@ -102,6 +125,10 @@ json = {
             "cmd"   => %q[cat /etc/passwd],
             "msg"   => "All User Accounts",
         },
+        "Groups"    => {
+            "cmd"   => %q[cat /etc/group],
+            "msg"   => "All Group Accounts",
+        },
         "Supusr"    => {
             "cmd"   => %q[grep -v -E "^#" /etc/passwd | awk -F: "$3 == 0{print $1}"],
             "msg"   => "All Super Users Found",
@@ -113,6 +140,18 @@ json = {
         "Env"       => {
             "cmd"   => %q[env | grep -v "LS_COLORS"],
             "msg"   => "Environment Information",
+        },
+        "Set"       => {
+            "cmd"   => %q[set],
+            "msg"   => "Shell Variables",
+        },
+        "Sys Vars"  => {
+            "cmd"   => %q[cat /etc/profiles],
+            "msg"   => "Default System Variables",
+        },
+        "Shells"    => {
+            "cmd"   => %q[/etc/shells],
+            "msg"   => "Available shells",
         },
         "Sudoers"   => {
             "cmd"   => %q[cat /etc/sudoers | grep -v "#" | sed "/^$/d"],
@@ -197,6 +236,10 @@ json = {
         },
     },
     "Hardware Enumeration" => {
+        "CPU"       => {
+            "cmd"   => %q[cat /proc/cpuinfo],
+            "msg"   => "Listing CPU Information",
+        },
         "LVM"       => {
             "cmd"   => %q[dmsetup ls --tree -o active,open,rw,uuid,ascii,notrunc],
             "msg"   => "Logival Volume Manager Information",
