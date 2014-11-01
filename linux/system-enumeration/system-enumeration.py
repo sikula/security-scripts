@@ -8,17 +8,13 @@ import codecs
 import datetime
 import subprocess
 from optparse import OptionParser
-from lxml     import etree
-
-
-#// For building our XML File
-root_element	= etree.Element("enumrun")
 
 #// Parse the command line options
 parser = OptionParser()
 parser.add_option("-c", "--command-list", dest="command_list" , help="Specifiy a json file with the commands to be enumerated")
 parser.add_option("-e", "--enumerate"   , dest="enumeration"  , help="Specify a enumeration to run defined by a key in the json file")
 parser.add_option("-o", "--output"      , dest="output_file"  , help="Specify output file")
+parser.add_option("-f", "--forest"      , dest="forest"       , action='store_true' , help="Display output in tree-like format")
 parser.add_option("-N", "--no-header"   , dest="no_header"    , action='store_true', help="Remove headers from output")
 (options, arg) = parser.parse_args()
 if options.enumeration:
@@ -32,6 +28,7 @@ class JsonHelper:
     def __init__(self):
         with codecs.open(str(options.command_list), 'rU', 'utf-8') as json_data:
             self.json_data    = json.load(json_data)
+
 
     def get_json(self):
         return self.json_data
@@ -49,17 +46,38 @@ class Tee(object):
             f.write(obj)
 
 
-
 #-----------------------------------------------------------------------------------------------------
 # Handles proper output formatting
 #-----------------------------------------------------------------------------------------------------
 class FormatHelper:
+    def _big_title(self, msg):
+        if not options.no_header:
+            print "\n"
+            print "[ + ] " + msg
+            print "-" * 77
+        else:
+            print "\n"
+
+
     def error(self, text):
-        print "  | [!] Root privelges probably required" + text
+        print "    [ ! ] " + text
+
+
+    def file_header(self):
+        current_time    = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
+        print "=" * 80
+        print "{0:<15s} : {1:15s}".format("Date/Start Time" , current_time)
+        print "{0:<15s} : {1:15s}".format("Command Line"    , " ".join(sys.argv))
+        print "{0:<15s} : {1:15s}".format("Filename"        , options.output_file)
+        print "{0:<15s} : {1:15s}".format("Hostname"        , os.environ["HOSTNAME"])
+        print "=" * 80
+
 
     def _print_cmd(self, output):
-    	print "", output.rstrip()
-
+        if options.forest:
+            print "  |> ", output.rstrip()
+        else:
+            print "    ", output.rstrip()
 
 
 #-----------------------------------------------------------------------------------------------------
@@ -83,6 +101,7 @@ class CommandRunner:
         for category in self.json[enumeration]:
             command     = self.json[enumeration][category]["cmd"]
             message     = self.json[enumeration][category]["msg"]
+            self.formatter._big_title(message)
             try:
                 results = subprocess.check_output(command, stderr=subprocess.PIPE, shell=True, universal_newlines=True);
             except subprocess.CalledProcessError as exc:
@@ -106,16 +125,13 @@ class CommandRunner:
 # Main Function: starts the CommandRunner and shoves output to file
 #-----------------------------------------------------------------------------------
 def main():
-    formatter     = FormatHelper()
-    commander     = CommandRunner()
+    formatter = FormatHelper()
+    commander = CommandRunner()
     if options.output_file:
         output_file = open(options.output_file, 'w')
         original    = sys.stdout
         sys.stdout  = Tee(sys.stdout, output_file)
-
-	xml = etree.tostring(root_element, pretty_print=True, xml_declaration=True, encoding='UTF-8')
-	print xml
-
+        formatter.file_header()
         commander.run_enumerations()
         sys.stdout = original
         output_file.close()
