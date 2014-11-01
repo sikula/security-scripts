@@ -1,0 +1,38 @@
+==+ ------ { ID: +0000000/GROUP: HEADER } ---------------------------------------------------+==
+  |# Date/Start Time : 2014/10/31 05:26:54
+  |# Command Line    : system-enumeration.py --command-list resources/fedora_enumeration.json --forest --output system-scan-201410310126EDT.scan
+  |# Filename        : system-scan-201410310126EDT.scan
+  |# Hostname        : f20s
+==+ -----------------------------------------------------------------------------------------+==
+
+==+ ------ { ID: +1023123/GROUP: SYSTEM } ---------------------------------------------------+==
+  |# System/Kernel Version Information
+  |===========================================================
+  |  drwxrwxrwt. 2 root root 40 Oct 30 22:22 /dev/mqueue
+  |  drwxrwxrwt. 2 root root 120 Oct 31 00:45 /dev/shm
+  |  drwxrwxrwt. 20 root root 4096 Oct 31 00:44 /var/tmp
+  |  drwxrwxrwt. 19 root root 440 Oct 31 01:26 /tmp
+  |  drwxrwxrwt. 2 root root 40 Oct 30 22:22 /tmp/.Test-unix
+  |  drwxrwxrwt. 2 root root 40 Oct 30 22:22 /tmp/.font-unix
+  |  drwxrwxrwt. 2 root root 40 Oct 30 22:22 /tmp/.XIM-unix
+  |  drwxrwxrwt. 2 root root 60 Oct 30 22:23 /tmp/.ICE-unix
+  |  drwxrwxrwt. 2 root root 60 Oct 30 22:22 /tmp/.X11-unix
+  |
+  |# System Hostname
+  |============================================================
+  |  f20s
+  |
+  |# Operating System Information
+  |============================================================
+  |  Fedora release 20 (Heisenbug)
+  |  Kernel \r on an \m (\l)
+  |
+  |# Kernel Information
+  |============================================================
+  |  Linux version 3.16.6-200.fc20.i686 (mockbuild@bkernel02.phx2.fedoraproject.org) (gcc version 4.8.3 20140911 (Red Hat 4.8.3-7) (GCC) ) #1 SMP Wed Oct 15 13:48:38 UTC
+==+ -----------------------------------------------------------------------------------------+==
+
+==+ ------ { ID: +1111111/GROUP: FOOTER } -----------------------------------------------------------------------------------------------------------------------------+==
+  |# START TIME :
+  |# END   TIME :
+==+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------+==
