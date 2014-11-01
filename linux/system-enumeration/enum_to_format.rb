@@ -1,7 +1,7 @@
 require "json"
 
 json = {
-    "SYSTEM" => {
+    "System Enumeration" => {
         "OS"    => {
             "cmd"   => %q[cat /etc/issue],
             "msg"   => "Operating System Information",
@@ -19,7 +19,7 @@ json = {
             "msg"   => "System Hostname",
         },
     },
-    "NET_INFO" => {
+    "Network Enumeration" => {
         "Net"   => {
             "cmd"   => %q[ifconfig -a],
             "msg"   => "Available Network Interfaces",
@@ -49,7 +49,7 @@ json = {
             "msg"   => "TCP Dump Network Traffic",
         },
     },
-    "DRIVE_INFO" => {
+    "Drive Enumeration" => {
         "Mount"     => {
             "cmd"   => %q[mount],
             "msg"   => "Currently Mounted Devices",
@@ -59,7 +59,7 @@ json = {
             "msg"   => "Other Devices Statistics",
         },
     },
-    "LOG_INFO" => {
+    "Log File Enumeration" => {
         "Logwatch"  => {
             "cmd"   => %q[logwatch --detail 10 --range Today --numeric --hostname --filename],
             "msg"   => "Recent Log Entries",
@@ -77,19 +77,19 @@ json = {
             "msg"   => "Listing Writable Cron Directories",
         },
     },
-    "DATABSE_INFO" => {
+    "Database Enumeration" => {
         "MySQLDUMP" => {
             "cmd"   => %q[systemctl stop mysqld.service ; mysqld_safe ; mysqldump --all-databases --skip-add-drop-table --skip-set-charset | grep -v "help" ; systemctl start mysqld.service"],
             "msg"   => "Dumping MySQL Database",
         },
     },
-    "CONF_INFO" => {
+    "Configuration Enumeration" => {
         "OpenSSH"   => {
             "cmd"   => %q[sshd -T],
             "msg"   => "Testing OpenSSH Configuration",
         },
      },
-    "USER_INFO" => {
+    "User Enumeration" => {
         "Whoami"    => {
             "cmd"   => %q[whoami],
             "msg"   => "Current User Session",
@@ -123,7 +123,7 @@ json = {
             "msg"   => "All Users Currently Logged In",
         },
     },
-    "PERMS" => {
+    "Permission Enumeration" => {
         "DIRSROOT"  => {
             "cmd"   => %q[find / \( -wholename \"$HOME*\" -prune \) -o \( -type d -perm -0002 \) -exec ls -ld "{}" ";" 2>/dev/null | grep root],
             "msg"   => "Searching For World Writeable Directories For User => Root",
@@ -154,7 +154,7 @@ json = {
             "msg"   => "Testing If Home Directory Is Visible for User => Root",
         },
     },
-    "PASS_FILES" => {
+    "Password File Enumeration" => {
         "LOGPWD"    => {
             "cmd"   => %q[find /var/log -name "*.log" 2>/dev/null | xargs -l10 egrep "pwd|password" 2>/dev/null],
             "msg"   => "Searching For Keywords [pwd|passwd] In Log Files",
@@ -172,31 +172,31 @@ json = {
             "msg"   => "Shadow Files",
         },
     },
-    "PROCESS_INFO" => {
+    "Process Enumeration" => {
         "Procs"     => {
             "cmd"   => %q[ps axfo cgroup,rgid,class,stat,args],
             "msg"   => "Process Information",
         },
     },
-    "PACKAGES" => {
-        "DPKG"       => {
-            "cmd"   => %q[],
-            "msg"   => "Listing Installed Packages --( DPKG )--",
+    "Package Enumeration" => {
+        "RPM"       => {
+            "cmd"   => %q[rpm -qa --qf "[%-10{=FILEMD5S} %-30{NAME}] %{INSTALLTIME:date}\n" | sort -u -k2],
+            "msg"   => "Listing Installed Packages --( RPM )--",
         },
     },
-    "TOOLS_INFO" => {
+    "Tool Enumeration" => {
         "Tools"     => {
             "cmd"   => %q[which awk sed perl python ruby java gcc cc vi vim nmap find ncat nc wget tftp ftp 2>/dev/null],
             "msg"   => "Available Development Tools",
         },
     },
-    "VIRT_HARDWARE"  => {
+    "Virtual Hardware Enumeration"  => {
         "VBoxManage" => {
             "cmd"    => %q[vboxmanage list --long vms],
             "msg"    => "Virtual Machine Information"
         },
     },
-    "HARDWARE" => {
+    "Hardware Enumeration" => {
         "LVM"       => {
             "cmd"   => %q[dmsetup ls --tree -o active,open,rw,uuid,ascii,notrunc],
             "msg"   => "Logival Volume Manager Information",
